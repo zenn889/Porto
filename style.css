@@ -149,14 +149,43 @@ body {
   margin: 0 0 18px;
   font-weight: 800;
   letter-spacing: -0.035em;
-  background: var(--accent-grad);
+  background: linear-gradient(
+      100deg,
+      var(--accent) 0%,
+      #c4b5fd 25%,
+      var(--accent-2) 45%,
+      var(--accent) 65%,
+      #c4b5fd 85%,
+      var(--accent) 100%
+    );
+  background-size: 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 7s linear infinite;
   filter: drop-shadow(0 12px 34px rgba(110, 231, 255, 0.16));
+}
+@keyframes shimmer {
+  to { background-position: -250% 0; }
 }
 .role { font-size: clamp(1.15rem, 3vw, 1.7rem); font-weight: 600; margin: 0 0 16px; }
 .role .accent { color: var(--accent); }
+.role .typed { min-height: 1.2em; display: inline-block; }
+.type-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.05em;
+  background: var(--accent);
+  margin-left: 3px;
+  vertical-align: -2px;
+  animation: blink 0.85s steps(1) infinite;
+  border-radius: 2px;
+}
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
 .bio { max-width: 60ch; margin: 0 auto 30px; color: var(--text-2); font-size: 1.02rem; }
 
 .cta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
@@ -413,7 +442,94 @@ body {
 .footer-inner a { color: var(--text-3); text-decoration: none; }
 .footer-inner a:hover { color: var(--accent); }
 
-/* ---------- ANIMATIONS ---------- */
+/* ---------- ORBS (hero background) ---------- */
+.orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.orb:nth-child(1) {
+  width: 460px; height: 460px;
+  background: radial-gradient(circle at 30% 30%, #6ee7ff, transparent 62%);
+  top: 6%; left: 12%;
+  animation: orb-a 19s ease-in-out infinite;
+}
+.orb:nth-child(2) {
+  width: 380px; height: 380px;
+  background: radial-gradient(circle at 30% 30%, #a78bfa, transparent 62%);
+  bottom: 8%; right: 14%;
+  animation: orb-b 24s ease-in-out infinite;
+}
+.orb:nth-child(3) {
+  width: 290px; height: 290px;
+  background: radial-gradient(circle at 30% 30%, #f472b6, transparent 62%);
+  top: 42%; left: 58%;
+  opacity: 0.35;
+  animation: orb-c 21s ease-in-out infinite;
+}
+:root[data-theme="light"] .orb { opacity: 0.3; }
+:root[data-theme="light"] .orb:nth-child(3) { opacity: 0.2; }
+@keyframes orb-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(90px, -60px) scale(1.08); }
+  66% { transform: translate(-50px, 70px) scale(0.94); }
+}
+@keyframes orb-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-100px, -80px) scale(1.12); }
+}
+@keyframes orb-c {
+  0%, 100% { transform: translate(0, 0); }
+  40% { transform: translate(-70px, 50px); }
+  75% { transform: translate(60px, -40px); }
+}
+
+/* ---------- SPOTLIGHT (cursor glow) ---------- */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s;
+  background: radial-gradient(
+    340px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 13%, transparent),
+    transparent 70%
+  );
+}
+.spotlight.on { opacity: 1; }
+
+/* ---------- SCROLL PROGRESS ---------- */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--accent-grad);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 200;
+}
+
+/* ---------- PARALLAX GRID ---------- */
+.grid-bg { will-change: transform; }
+
+.btn { will-change: transform; }
+.stagger > * { opacity: 0; transform: translateY(18px); transition: opacity .5s, transform .5s; }
+.stagger.in > * { opacity: 1; transform: none; }
+.stagger.in > *:nth-child(2) { transition-delay: .08s; }
+.stagger.in > *:nth-child(3) { transition-delay: .16s; }
+.stagger.in > *:nth-child(4) { transition-delay: .24s; }
+
+/* ---------- PROJECT CARD 3D TILT ---------- */
+.project { transform-style: preserve-3d; }
+.project .project-body { transform: translateZ(26px); }
+.project .project-thumb { transform: translateZ(14px); }
+
 .reveal {
   opacity: 0;
   transform: translateY(22px);
@@ -423,7 +539,11 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal, .stagger > * { opacity: 1; transform: none; }
+  .scroll-progress { display: none; }
+  .type-cursor { display: none; }
+  .spotlight { display: none; }
+  .orb { animation: none; }
   html { scroll-behavior: auto; }
 }
 

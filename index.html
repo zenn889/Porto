@@ -13,6 +13,8 @@
 </head>
 <body>
 <div class="grid-bg" aria-hidden="true"></div>
+<div class="spotlight" id="spotlight" aria-hidden="true"></div>
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
   <a href="#hero" class="logo">&lt;<span>dev</span>/&gt;</a>
@@ -30,10 +32,15 @@
 <main>
   <!-- HERO -->
   <section class="hero" id="hero">
+    <div class="orbs" aria-hidden="true">
+      <span class="orb"></span>
+      <span class="orb"></span>
+      <span class="orb"></span>
+    </div>
     <div class="container hero-inner">
       <p class="eyebrow">Hello, world! I'm</p>
       <h1 class="name">Your Name</h1>
-      <p class="role">I build <span class="accent">fast, reliable software</span> for the web.</p>
+      <p class="role">I build <span class="accent typed" id="typed"></span><span class="type-cursor" aria-hidden="true"></span></p>
       <p class="bio">Full-stack developer focused on clean architecture, performance and developer experience. I turn ideas into shipped products.</p>
       <div class="cta">
         <a href="#projects" class="btn btn-primary">View my work</a>
@@ -55,15 +62,15 @@
     <div class="container">
       <h2 class="section-title">About <span>Me</span></h2>
       <div class="about-grid">
-        <div class="about-text">
+        <div class="about-text reveal">
           <p>I'm a software engineer who loves solving hard problems with simple solutions. From scaling APIs to crafting pixel-perfect UIs, I care about the details that users feel — speed, polish and reliability.</p>
           <p>When I'm not shipping, I'm learning new tools, contributing to open source, and writing about what I build.</p>
         </div>
         <div class="stats">
-          <div class="stat"><b>5+</b><span>Years experience</span></div>
-          <div class="stat"><b>20+</b><span>Projects shipped</span></div>
-          <div class="stat"><b>1M+</b><span>Requests served</span></div>
-          <div class="stat"><b>99.9%</b><span>Uptime target</span></div>
+          <div class="stat reveal"><b data-count="5" data-suffix="+">5+</b><span>Years experience</span></div>
+          <div class="stat reveal"><b data-count="20" data-suffix="+">20+</b><span>Projects shipped</span></div>
+          <div class="stat reveal"><b data-count="1" data-suffix="M+">1M+</b><span>Requests served</span></div>
+          <div class="stat reveal"><b data-count="99" data-suffix=".9%">99.9%</b><span>Uptime target</span></div>
         </div>
       </div>
     </div>
@@ -74,19 +81,19 @@
     <div class="container">
       <h2 class="section-title">Skills &amp; <span>Stack</span></h2>
       <div class="skills">
-        <div class="skill-card">
+        <div class="skill-card reveal">
           <h3>Frontend</h3>
           <div class="chips" data-skills="JavaScript,TypeScript,React,Next.js,CSS3,HTML5,Tailwind"></div>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal">
           <h3>Backend</h3>
           <div class="chips" data-skills="Node.js,Python,Go,REST,GraphQL,gRPC,PostgreSQL,Redis"></div>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal">
           <h3>DevOps & Cloud</h3>
           <div class="chips" data-skills="Docker,Kubernetes,Vercel,AWS,GitHub Actions,CI/CD,Terraform"></div>
         </div>
-        <div class="skill-card">
+        <div class="skill-card reveal">
           <h3>Tooling</h3>
           <div class="chips" data-skills="Git,Linux,Vim,Jest,Playwright,Vite"></div>
         </div>
@@ -113,7 +120,7 @@
     <div class="container">
       <h2 class="section-title">Let's <span>Connect</span></h2>
       <p class="contact-lead">Have a project in mind, or just want to say hi? My inbox is always open.</p>
-      <form class="contact-form" id="contactForm" novalidate>
+      <form class="contact-form reveal" id="contactForm" novalidate>
         <div class="field">
           <label for="name">Name</label>
           <input id="name" name="name" type="text" autocomplete="name" placeholder="Jane Doe" required />
@@ -132,7 +139,7 @@
         <button type="submit" class="btn btn-primary btn-block">Send message</button>
         <p class="form-note" id="formNote" role="status"></p>
       </form>
-      <div class="socials">
+      <div class="socials reveal">
         <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
         <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://twitter.com/" target="_blank" rel="noopener">X</a>

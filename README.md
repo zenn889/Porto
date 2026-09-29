@@ -7,11 +7,13 @@ Demo hitam-putih penuh, animasi scroll halus, dark/light theme, filter proyek, d
 ## ✨ Fitur
 
 - ⚡ **Nol dependency** — tidak ada `npm install`, tidak ada build step, langsung jadi
+- 🎞 **Animasi cinematic** — gradient shimmer di nama, typewriter untuk role, orb gradient melayang, spotlight mengikuti kursor, parallax grid, count-up untuk angka stat, progress bar scroll, 3D tilt di kartu proyek, dan tombol magnetik
 - 🌗 **Dark/Light mode** — tersimpan di `localStorage`, mengikuti preferensi sistem sebagai default
 - 📱 **Responsif** — tampil bagus di HP, tablet, dan desktop
-- ✨ **Animasi scroll** — via `IntersectionObserver`, ramah `prefers-reduced-motion`
+- ✨ **Animasi scroll** — via `IntersectionObserver`, dengan stagger per-kartu
+- ♿ **Ramah aksesibilitas** — semua animasi non-esensial otomatis dimatikan jika `prefers-reduced-motion: reduce` aktif, dan efek hover/tilt hanya muncul di perangkat dengan pointer (`hover: hover`)
 - 🧩 **Filter proyek** — kategori All / Web / Backend / Open source
-- ✉️ **Form kontak** — validasi sisi klien (siang-siang saat ini demo, lihat catatan di bawah)
+- ✉️ **Form kontak** — validasi sisi klien (saat ini demo, lihat catatan di bawah)
 - 🚫 **Tidak ada analytics, tracker, atau cookie**
 
 ## 🚀 Deploy ke Vercel

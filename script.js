@@ -231,3 +231,154 @@ form.addEventListener("submit", (e) => {
 /* ---------- Apply profile ---------- */
 document.querySelector(".name").textContent = PROFILE.name;
 document.title = `${PROFILE.name} — Portfolio`;
+
+/* =========================================================
+   ANIMATIONS — all gated behind prefers-reduced-motion
+   ========================================================= */
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- Typewriter (hero role) ---------- */
+const typedEl = document.getElementById("typed");
+if (typedEl && !reduceMotion) {
+  const phrases = [
+    PROFILE.role.replace(/^I build /, "").replace(/\.$/, ""),
+    "fast, reliable software",
+    "delightful user interfaces",
+    "scalable backends",
+    "things people love to use",
+  ];
+  let pi = 0, ci = 0, deleting = false;
+
+  const tick = () => {
+    const word = phrases[pi];
+    if (!deleting) {
+      typedEl.textContent = word.slice(0, ++ci);
+      if (ci === word.length) {
+        deleting = true;
+        return setTimeout(tick, 1900);
+      }
+      setTimeout(tick, 62 + Math.random() * 65);
+    } else {
+      typedEl.textContent = word.slice(0, --ci);
+      if (ci === 0) {
+        deleting = false;
+        pi = (pi + 1) % phrases.length;
+        return setTimeout(tick, 420);
+      }
+      setTimeout(tick, 34);
+    }
+  };
+  setTimeout(tick, 650);
+} else if (typedEl) {
+  typedEl.textContent = PROFILE.role.replace(/^I build /, "").replace(/\.$/, "");
+}
+
+/* ---------- Scroll progress bar ---------- */
+const progress = document.getElementById("scrollProgress");
+const onProgress = () => {
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  progress.style.transform = `scaleX(${max > 0 ? h.scrollTop / max : 0})`;
+};
+onProgress();
+window.addEventListener("scroll", onProgress, { passive: true });
+
+/* ---------- Cursor spotlight + grid parallax ---------- */
+const spotlight = document.getElementById("spotlight");
+const gridBg = document.querySelector(".grid-bg");
+let mx = 0.5, my = 0.5, tmx = 0.5, tmy = 0.5;
+
+if (!reduceMotion) {
+  window.addEventListener("pointermove", (e) => {
+    tmx = e.clientX / window.innerWidth;
+    tmy = e.clientY / window.innerHeight;
+    spotlight.classList.add("on");
+    spotlight.style.setProperty("--mx", `${e.clientX}px`);
+    spotlight.style.setProperty("--my", `${e.clientY}px`);
+  });
+  window.addEventListener("pointerleave", () => spotlight.classList.remove("on"));
+
+  const smooth = () => {
+    mx += (tmx - mx) * 0.075;
+    my += (tmy - my) * 0.075;
+    gridBg.style.transform = `translate3d(${(mx - 0.5) * 54}px, ${(my - 0.5) * 54}px, 0)`;
+    requestAnimationFrame(smooth);
+  };
+  requestAnimationFrame(smooth);
+}
+
+/* ---------- Stat count-up ---------- */
+const countObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+      countObserver.unobserve(el);
+      if (reduceMotion) return;
+
+      const target = parseInt(el.dataset.count, 10);
+      const suffix = el.dataset.suffix || "";
+      const dur = 1400;
+      const start = performance.now();
+
+      const step = (now) => {
+        const t = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(target * eased) + suffix;
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  },
+  { threshold: 0.5 }
+);
+document.querySelectorAll("[data-count]").forEach((el) => countObserver.observe(el));
+
+/* ---------- Project card 3D tilt ---------- */
+if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
+  document.querySelectorAll(".project").forEach((card) => {
+    card.addEventListener("pointermove", (e) => {
+      const r = card.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = `perspective(900px) rotateY(${px * 7}deg) rotateX(${-py * 7}deg) translateY(-5px) scale(1.015)`;
+    });
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
+/* ---------- Magnetic buttons ---------- */
+if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
+  document.querySelectorAll(".btn, .filter").forEach((btn) => {
+    btn.addEventListener("pointermove", (e) => {
+      const r = btn.getBoundingClientRect();
+      btn.style.transform = `translate(${(e.clientX - (r.left + r.width / 2)) * 0.18}px, ${(e.clientY - (r.top + r.height / 2)) * 0.18}px)`;
+    });
+    btn.addEventListener("pointerleave", () => {
+      btn.style.transform = "";
+    });
+  });
+}
+
+/* ---------- Stagger groups (skills rows, stats, projects) ---------- */
+const staggerObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in");
+        staggerObserver.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.12 }
+);
+document
+  .querySelectorAll(".skills, .stats, .projects")
+  .forEach((el) => staggerObserver.observe(el));
+
+/* ---------- Fade nav in on load ---------- */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
