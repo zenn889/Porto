@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Dev Portfolio — a fast, minimal developer portfolio." />
+<title>Dev Portfolio</title>
+<link rel="icon" href="data:," />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <a href="#hero" class="logo">&lt;<span>dev</span>/&gt;</a>
+  <nav class="nav-links" aria-label="Primary">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+    <span class="sun">☀</span><span class="moon">☾</span>
+  </button>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero-inner">
+      <p class="eyebrow">Hello, world! I'm</p>
+      <h1 class="name">Your Name</h1>
+      <p class="role">I build <span class="accent">fast, reliable software</span> for the web.</p>
+      <p class="bio">Full-stack developer focused on clean architecture, performance and developer experience. I turn ideas into shipped products.</p>
+      <div class="cta">
+        <a href="#projects" class="btn btn-primary">View my work</a>
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      </div>
+      <div class="badges">
+        <span class="badge">⚡ 5+ years</span>
+        <span class="badge">★ 20+ projects</span>
+        <span class="badge">◈ Open source</span>
+      </div>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span></span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title">About <span>Me</span></h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>I'm a software engineer who loves solving hard problems with simple solutions. From scaling APIs to crafting pixel-perfect UIs, I care about the details that users feel — speed, polish and reliability.</p>
+          <p>When I'm not shipping, I'm learning new tools, contributing to open source, and writing about what I build.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>5+</b><span>Years experience</span></div>
+          <div class="stat"><b>20+</b><span>Projects shipped</span></div>
+          <div class="stat"><b>1M+</b><span>Requests served</span></div>
+          <div class="stat"><b>99.9%</b><span>Uptime target</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="container">
+      <h2 class="section-title">Skills &amp; <span>Stack</span></h2>
+      <div class="skills">
+        <div class="skill-card">
+          <h3>Frontend</h3>
+          <div class="chips" data-skills="JavaScript,TypeScript,React,Next.js,CSS3,HTML5,Tailwind"></div>
+        </div>
+        <div class="skill-card">
+          <h3>Backend</h3>
+          <div class="chips" data-skills="Node.js,Python,Go,REST,GraphQL,gRPC,PostgreSQL,Redis"></div>
+        </div>
+        <div class="skill-card">
+          <h3>DevOps & Cloud</h3>
+          <div class="chips" data-skills="Docker,Kubernetes,Vercel,AWS,GitHub Actions,CI/CD,Terraform"></div>
+        </div>
+        <div class="skill-card">
+          <h3>Tooling</h3>
+          <div class="chips" data-skills="Git,Linux,Vim,Jest,Playwright,Vite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title">Featured <span>Projects</span></h2>
+      <div class="filters" id="projectFilters" role="tablist" aria-label="Project filters">
+        <button class="filter active" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter" data-filter="web" aria-pressed="false">Web</button>
+        <button class="filter" data-filter="api" aria-pressed="false">Backend</button>
+        <button class="filter" data-filter="oss" aria-pressed="false">Open source</button>
+      </div>
+      <div class="projects" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="section-title">Let's <span>Connect</span></h2>
+      <p class="contact-lead">Have a project in mind, or just want to say hi? My inbox is always open.</p>
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" placeholder="Jane Doe" required />
+          <small class="error" data-for="name"></small>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required />
+          <small class="error" data-for="email"></small>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tell me about your idea…" required></textarea>
+          <small class="error" data-for="message"></small>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send message</button>
+        <p class="form-note" id="formNote" role="status"></p>
+      </form>
+      <div class="socials">
+        <a href="https://github.com/" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://twitter.com/" target="_blank" rel="noopener">X</a>
+        <a href="mailto:you@example.com">Email</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>© <span id="year"></span> Your Name. Built with vanilla HTML/CSS/JS.</span>
+    <span class="footer-links">
+      <a href="#hero">Back to top ↑</a>
+    </span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
